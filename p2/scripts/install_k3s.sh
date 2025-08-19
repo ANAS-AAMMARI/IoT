@@ -26,14 +26,8 @@ until sudo /usr/local/bin/k3s kubectl get nodes >/dev/null 2>&1; do
 done
 echo "[INFO] K3s API is ready."
 
-# Setup kubectl for current user
-echo "[INFO] Configuring kubectl for non-root user..."
-mkdir -p $HOME/.kube
-sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
 # Deploy the applications
 echo "[INFO] Deploying applications..."
-kubectl apply -f /vagrant/confs/
+sudo /usr/local/bin/k3s kubectl apply -f /vagrant/confs/
 
 echo "[INFO] All applications deployed successfully!"
